@@ -9,6 +9,7 @@ package net.sourceforge.zbar.android.CameraTest;
 import net.sourceforge.zbar.android.CameraTest.CameraPreview;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,15 +45,18 @@ public class CameraTestActivity extends Activity
 
     TextView scanText;
     Button scanButton;
+    Button searchButton;
 
     ImageScanner scanner;
 
     private boolean barcodeScanned = false;
     private boolean previewing = true;
 
+    public String resultString;
+
     static {
         System.loadLibrary("iconv");
-    } 
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,19 +80,29 @@ public class CameraTestActivity extends Activity
         scanText = (TextView)findViewById(R.id.scanText);
 
         scanButton = (Button)findViewById(R.id.ScanButton);
+        searchButton = (Button)findViewById(R.id.SearchButton);
 
         scanButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    if (barcodeScanned) {
-                        barcodeScanned = false;
-                        scanText.setText("Scanning...");
-                        mCamera.setPreviewCallback(previewCb);
-                        mCamera.startPreview();
-                        previewing = true;
-                        mCamera.autoFocus(autoFocusCB);
-                    }
+            public void onClick(View v) {
+                if (barcodeScanned) {
+                    barcodeScanned = false;
+                    scanText.setText("Scanning...");
+                    mCamera.setPreviewCallback(previewCb);
+                    mCamera.startPreview();
+                    previewing = true;
+                    mCamera.autoFocus(autoFocusCB);
                 }
-            });
+            }
+        });
+
+        searchButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(CameraTestActivity.this,CameraTestResult.class);
+                i.putExtra("extra_resultString", resultString);
+                startActivity(i);
+            }
+        });
+
     }
 
     public void onPause() {
@@ -116,40 +130,44 @@ public class CameraTestActivity extends Activity
     }
 
     private Runnable doAutoFocus = new Runnable() {
-            public void run() {
-                if (previewing)
-                    mCamera.autoFocus(autoFocusCB);
-            }
-        };
+        public void run() {
+            if (previewing)
+                mCamera.autoFocus(autoFocusCB);
+        }
+    };
 
     PreviewCallback previewCb = new PreviewCallback() {
-            public void onPreviewFrame(byte[] data, Camera camera) {
-                Camera.Parameters parameters = camera.getParameters();
-                Size size = parameters.getPreviewSize();
+        public void onPreviewFrame(byte[] data, Camera camera) {
+            Camera.Parameters parameters = camera.getParameters();
+            Size size = parameters.getPreviewSize();
 
-                Image barcode = new Image(size.width, size.height, "Y800");
-                barcode.setData(data);
+            Image barcode = new Image(size.width, size.height, "Y800");
+            barcode.setData(data);
 
-                int result = scanner.scanImage(barcode);
-                
-                if (result != 0) {
-                    previewing = false;
-                    mCamera.setPreviewCallback(null);
-                    mCamera.stopPreview();
-                    
-                    SymbolSet syms = scanner.getResults();
-                    for (Symbol sym : syms) {
-                        scanText.setText("barcode result " + sym.getData());
-                        barcodeScanned = true;
-                    }
+            int result = scanner.scanImage(barcode);
+
+            if (result != 0) {
+                previewing = false;
+                mCamera.setPreviewCallback(null);
+                mCamera.stopPreview();
+
+                SymbolSet syms = scanner.getResults();
+                for (Symbol sym : syms) {
+                    scanText.setText("barcode result " + sym.getData());
+                    barcodeScanned = true;
+
+                    resultString = sym.getData();
+
                 }
+
             }
-        };
+        }
+    };
 
     // Mimic continuous auto-focusing
     AutoFocusCallback autoFocusCB = new AutoFocusCallback() {
-            public void onAutoFocus(boolean success, Camera camera) {
-                autoFocusHandler.postDelayed(doAutoFocus, 1000);
-            }
-        };
+        public void onAutoFocus(boolean success, Camera camera) {
+            autoFocusHandler.postDelayed(doAutoFocus, 1000);
+        }
+    };
 }

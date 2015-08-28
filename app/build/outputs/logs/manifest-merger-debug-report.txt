@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:2:1-19:12
+ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:2:1-22:12
 	package
 		ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:3:7-56
 		INJECTED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml
@@ -35,7 +35,7 @@ ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManife
 	android:name
 		ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:9:19-67
 application
-ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:10:5-18:19
+ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:10:5-21:19
 	android:label
 		ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:10:18-50
 activity#net.sourceforge.zbar.android.CameraTest.CameraTestActivity
@@ -54,3 +54,9 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:15:17-77
 	android:name
 		ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:15:27-74
+activity#net.sourceforge.zbar.android.CameraTest.CameraTestResult
+ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:18:9-20:20
+	android:label
+		ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:19:19-51
+	android:name
+		ADDED from C:\Users\egerbin\StudioProjects\CameraTest\app\src\main\AndroidManifest.xml:18:19-50
