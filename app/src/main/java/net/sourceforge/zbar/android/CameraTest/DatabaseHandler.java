@@ -36,7 +36,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_PH_NO + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
-        Log.d("Insert: ", "Inserting ..");
     }
 
     @Override
