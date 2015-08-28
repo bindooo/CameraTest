@@ -82,11 +82,14 @@ public class CameraTestActivity extends Activity
         scanButton = (Button)findViewById(R.id.ScanButton);
         searchButton = (Button)findViewById(R.id.SearchButton);
 
+        searchButton.setVisibility(View.INVISIBLE);
+
         scanButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 if (barcodeScanned) {
                     barcodeScanned = false;
                     scanText.setText("Scanning...");
+                    searchButton.setVisibility(View.INVISIBLE);
                     mCamera.setPreviewCallback(previewCb);
                     mCamera.startPreview();
                     previewing = true;
@@ -155,6 +158,8 @@ public class CameraTestActivity extends Activity
                 for (Symbol sym : syms) {
                     scanText.setText("barcode result " + sym.getData());
                     barcodeScanned = true;
+
+                    searchButton.setVisibility(View.VISIBLE);
 
                     resultString = sym.getData();
 
