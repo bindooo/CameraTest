@@ -26,4 +26,10 @@ public class CameraTestResult extends Activity
 
     }
 
+    public void onBackPressed(){
+        Intent i = new Intent(CameraTestResult.this, CameraTestActivity.class);
+        finish();
+        startActivity(i);
+    }
+
 }
