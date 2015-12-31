@@ -57,8 +57,6 @@ public class CameraTestActivity extends Activity
 
         setContentView(R.layout.main);
 
-        DatabaseHandler db = new DatabaseHandler(this);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         autoFocusHandler = new Handler();
